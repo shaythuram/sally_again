@@ -99,7 +99,9 @@ const createAssistantWithFiles = async (files: File[], assistantName: string, in
     // Create the assistant first
     const assistant = await openai.beta.assistants.create({
       name: assistantName,
+      //SHAY COMMENT - ASSISTANT INSTRUCTION//
       instructions: instructions,
+      //SHAY COMMENT - ASSISTANT INSTRUCTION//
       tools: [{ type: 'file_search' }],
       model: "gpt-4o"
     });
@@ -1518,13 +1520,14 @@ Best regards,`,
           
           // Use the original uploaded files directly instead of downloading from URLs
           if (uploadedFiles.length > 0) {
+            /// SHAY COMMENT - ASSISTANT INSTRUCTION//
             const assistantName = `Assistant for ${callData.title} - ${callData.company}`;
             const instructions = callData.description
               ? `You are a helpful assistant for this call. Use the uploaded documents and your knowledge to answer questions and assist with any call-related queries. The call description is: ${callData.description}`
               : `You are a helpful assistant for this call. Use the uploaded documents and your knowledge to answer questions and assist with any call-related queries.`;
-            
+
             const result = await createAssistantWithFiles(uploadedFiles, assistantName, instructions);
-            
+            /// SHAY COMMENT - ASSISTANT INSTRUCTION//
             if (result.error) {
               console.error('❌ Failed to create assistant:', result.error);
             } else {
